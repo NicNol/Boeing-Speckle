@@ -1,0 +1,26 @@
+{
+  "name": "bacull",
+  "version": "1.0.0",
+  "description": "Culls Boeing BAC and related specs from the Boeing D1-4426",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "startmon": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "line-reader": "^0.4.0",
+    "mongoose": "^5.12.13",
+    "node": "^16.1.0",
+    "pdf-parse": "^1.1.1",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
