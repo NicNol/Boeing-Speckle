@@ -1,10 +1,21 @@
 const fs = require('fs');
 const request = require('request-promise-native');
-const pdf = require('pdf-parse')
-const lineReader = require('line-reader')
-const express = require('express'),
-    app = express(),
-    port = process.env.PORT || 3000;
+const pdf = require('pdf-parse');
+const lineReader = require('line-reader');
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
+const Spec = require('./api/models/cullModel');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/Specdb', {useNewUrlParser: true, useUnifiedTopology: true});
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+const routes = require('./api/routes/cullRoute'); //importing route
+routes(app); //register the route
 
 async function downloadPDF(pdfURL, outputFilename) {
     let pdfBuffer = await request.get({uri: pdfURL, encoding: null});
@@ -12,19 +23,21 @@ async function downloadPDF(pdfURL, outputFilename) {
     fs.writeFileSync(outputFilename, pdfBuffer);
 }
 
-//downloadPDF("http://active.boeing.com/doingbiz/d14426/bac_specrev.pdf", "./files/somePDF.pdf");
+function downloadFile() {
+    downloadPDF("http://active.boeing.com/doingbiz/d14426/bac_specrev.pdf", "./files/somePDF.pdf");
+}
 
-
-
-//let dataBuffer = fs.readFileSync("./files/somePDF.pdf");
- 
-// pdf(dataBuffer).then(function(data) {
- 
-//     fs.writeFile("./files/pdfText.txt", data.text, function(err) {
-//         if (err) return console.log(err);
-//     })
-        
-// });
+function PDFtoText() {
+    let dataBuffer = fs.readFileSync("./files/somePDF.pdf");
+    
+    pdf(dataBuffer).then(function(data) {
+    
+        fs.writeFile("./files/pdfText.txt", data.text, function(err) {
+            if (err) return console.log(err);
+        })
+            
+    });
+}
 
 function parseFile() {
 
@@ -56,7 +69,6 @@ function fileToJson() {
 
     output = {}
     var stream = fs.createWriteStream("./files/pdfJSON.JSON", {flags:'a'});
-    //stream.write("{" + "\n");
 
     lineReader.eachLine('./files/pdfTextParsed.txt', function(line, last) {
 
@@ -81,20 +93,7 @@ function fileToJson() {
         if(last){
             console.log(output)
          }
-
-        // stream.write('\t"' + specName + '": {\n');
-        // stream.write('\t\t"specification": "' + specName + '",\n');
-        // stream.write('\t\t"revision": "' + specRev + '",\n');
-        // stream.write('\t\t"title": "' + specTitle + '",\n');
-        // stream.write('\t\t"date": "' + specDate + '"\n');
-        // stream.write('\t\t},\n');
     });
-
-    
-
-    //stream.write("}");
-    
-
 }
 
 //fileToJson();
