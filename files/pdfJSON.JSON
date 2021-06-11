@@ -1,13 +1,8 @@
-	"BAC001": {
+{
+		"BAC001": {
 		"specification": "BAC001",
 		"revision": "PREFY",
 		"title": "PREFACE",
-		"date": "18-FEB-2021"
-		},
-	"BAC001": {
-		"specification": "BAC001",
-		"revision": "PREF",
-		"title": "Rev Y 01 BAC001PREF DOCUMENT CHANGE NOTICE",
 		"date": "18-FEB-2021"
 		},
 	"BAC5000": {
@@ -5535,4 +5530,5 @@
 		"revision": "D",
 		"title": "APPLICATION OF HEAT RESISTANT SECONDARY FUEL BARRIER",
 		"date": "01-MAR-2016"
-		},
+		}
+	}

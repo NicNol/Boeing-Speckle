@@ -6,10 +6,11 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const config  = require('./config')
 const Spec = require('./api/models/cullModel');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Specdb', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
