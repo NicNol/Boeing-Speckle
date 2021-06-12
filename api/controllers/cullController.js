@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Spec = mongoose.model('Specs');
+const Spec = mongoose.model('Spec');
 
 exports.list_all_specs = function(req, res) {
   Spec.find({}, function(err, spec) {

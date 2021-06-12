@@ -16,6 +16,6 @@ let SpecSchema = new Schema({
   date: {
     type: String,
   }
-});
+}, {collection: 'bac'});
 
-module.exports = mongoose.model('Specs', SpecSchema);
+module.exports = mongoose.model('Spec', SpecSchema);
