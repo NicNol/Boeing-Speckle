@@ -15,13 +15,6 @@ mongoose.connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true}
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-  console.log("connected!");
-});
-
 const routes = require('./api/routes/cullRoute'); //importing route
 routes(app); //register the route
 
@@ -64,7 +57,7 @@ function parseFile() {
         }
         if (reading && result_end) {
             var stream = fs.createWriteStream("./files/pdfTextParsed.txt", {flags:'a'});
-            stream.write(mem + "\n");
+            stream.write(mem.trim() + "\n");
             mem = ""
             reading = false
         }

@@ -21,9 +21,14 @@ exports.create_a_spec = function(req, res) {
 };
 
 exports.read_a_spec = function(req, res) {
-  Spec.findById(req.params.specId, function(err, spec) {
-    if (err)
+  let specRegex = new RegExp(req.params.specification, "i") //Case insensitive
+  Spec.find({specification: {$regex: specRegex}}, function(err, spec) {
+    if (err) {
       res.send(err);
+    }
+    if (spec == null) {
+      res.status(500).send({url: req.originalUrl + ' not found'})
+    }
     res.json(spec);
   });
 };
