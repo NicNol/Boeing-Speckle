@@ -11,14 +11,14 @@ exports.list_all_specs = function(req, res) {
   });
 };
 
-exports.create_a_spec = function(req, res) {
-  var new_spec = new Spec(req.body);
-  new_spec.save(function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
-};
+// exports.create_a_spec = function(req, res) {
+//   var new_spec = new Spec(req.body);
+//   new_spec.save(function(err, task) {
+//     if (err)
+//       res.send(err);
+//     res.json(task);
+//   });
+// };
 
 exports.read_a_spec = function(req, res) {
   let specRegex = new RegExp(req.params.specification, "i") //Case insensitive
@@ -33,23 +33,11 @@ exports.read_a_spec = function(req, res) {
   });
 };
 
-exports.update_a_spec = function(req, res) {
-  Spec.findOneAndUpdate({_id: req.params.specId}, req.body, {new: true}, function(err, spec) {
-    if (err)
-      res.send(err);
-    res.json(spec);
-  });
-};
-
-exports.delete_a_spec = function(req, res) {
-
-  Spec.remove({
-    _id: req.params.specId
-  }, function(err, spec) {
-    if (err)
-      res.send(err);
-    res.json({ message: 'Spec successfully deleted' });
-  });
-};
-
+// exports.update_a_spec = function(req, res) {
+//   Spec.findOneAndUpdate({_id: req.params.specId}, req.body, {new: true}, function(err, spec) {
+//     if (err)
+//       res.send(err);
+//     res.json(spec);
+//   });
+// };
 
