@@ -57,7 +57,7 @@ function parseFile() {
         }
         if (reading && result_end) {
             var stream = fs.createWriteStream("./files/pdfTextParsed.txt", {flags:'a'});
-            stream.write(mem + "\n");
+            stream.write(mem.trim() + "\n");
             mem = ""
             reading = false
         }
