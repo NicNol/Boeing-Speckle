@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700&display=swap');
+html, body {
+    background-color: #eee;
+    color: #666;
+    height: 100%;
+    margin: 0;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+a, a:visited {
+    color: #666;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: #666;
+    transition: .5s color, .5s text-decoration-color;
+}
+
+a:hover {
+    color: navy;
+    text-decoration-color: transparent;
+}
+
+.body-content {
+    width: 600px;
+    height: 100%;
+    background-color: white;
+    margin: 0 auto;
+    overflow: none;
+    position: relative;
+}
+
+.body-content:before {
+    box-shadow: -20px 0 20px -20px #ddd inset;
+    content: " ";
+    height: 100%;
+    left: -20px;
+    position: absolute;
+    top: 0;
+    width: 20px;
+}
+
+.body-content:after {
+    box-shadow: 20px 0 20px -20px #ddd inset;
+    content: " ";
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 20px;
+}
+
+.body-content div {
+    padding: 0 20px;
+}
+
+.navbar-header, .nav-links {
+    border-bottom: #eee solid 1px;
+}
+
+.navbar-brand {
+    font-size: 64px;
+    font-weight: 100;
+    color: transparent;
+    background: #bbb;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
+}
+
+.nav-links {
+    text-align: center;
+    background-color: #fefefe;
+}
+
+.nav-links a, .nav-links a:visited {
+    text-decoration: none;
+    color: #bbb;
+    font-weight: 400;
+    padding: 0 20px;
+    font-size: 24px;
+    transition: color 1s;
+}
+
+.nav-links a:hover {
+    color: #666;
+}
+
+.last-updated {
+    text-align: right;
+    font-size: 12px;
+    margin-bottom: 2em;
+}
+
+.content-section {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+form label {
+    font-size: 24px;
+    text-align: center;
+}
+
+#spec_input {
+    width: 100%;
+    border: solid 2px #eee;
+    border-radius: 10px;
+    font-size: 48px;
+    text-align: center;
+    color:navy;
+}
+
+.button {
+    font-size: 24px;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+    color: #bbb;
+    width: 100%;
+    margin-top:-10px;
+}
