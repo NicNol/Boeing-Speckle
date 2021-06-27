@@ -1,39 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Boeing Speckle</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="body-content">
-        <nav class="navbar">
-            <div class="navbar-header">
-                <span class="navbar-brand">Boeing Speckle</span>
-            </div>
-            <div class="nav-links">
-                <a href="./index.html">Home</a>
-                <a href="#">API</a>
-                <a href="./about.html">About</a>
-            </div>
-        </nav>
-        <div class="content-section">
-            <div class="last-updated">Last updated: <span id="last-update-date">MM/DD/YYYY</span></div>
-
-            <form>
-                <label for="specification">Specification Search</label><br>
-                <input type="text" id="spec_input" name="spec_input">
-                <input type="submit" value="Search" class="button">
-
-                
-                
-                
-            </form>
+      <nav class="navbar">
+        <div class="navbar-header">
+          <span class="navbar-brand">Boeing Speckle</span>
         </div>
-    </div>
-</body>
+        <div class="nav-links">
+          <a href="./index">Home</a>
+          <a href="#">API</a>
+          <a href="./about">About</a>
+        </div>
+      </nav>
+      <div class="content-section">
+        <div class="last-updated">
+          Last updated: <span id="last-update-date">MM/DD/YYYY</span>
+        </div>
 
+        <form action="" method="GET" id="spec-search-form">
+          <label for="specification">Specification Search</label><br />
+          <input type="text" id="spec-input" autocomplete="off" />
+          <input type="submit" value="Search" class="button" onclick="" />
+        </form>
+        <div class="search-results-area">
+            <div class="number-results">Found XX similar:</div>
+            <div class="search-result">
+                <div class="search-spec">BAC5307 RevAA</div>
+                <div class ="search-title">PART MARKING</div>
+                <div class="search-date">22-APR-2020</div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("submit", "#spec-search-form", function () {
+                search_string = $("#spec-input").val();
+                uri = "/specs/" + search_string;
+                $.getJSON(uri, function( data ) {
+                    console.log(data) // returns an array of objects
+                })
+                return false;
+            });
+        });
+    </script>
+  </body>
 </html>

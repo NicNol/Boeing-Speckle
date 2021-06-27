@@ -3,6 +3,8 @@ const request = require('request-promise-native');
 const pdf = require('pdf-parse');
 const lineReader = require('line-reader');
 const express = require('express');
+const path = require('path');
+const serveStatic = require('serve-static')
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
@@ -14,6 +16,11 @@ mongoose.connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true}
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(serveStatic(path.join(__dirname, '/public'), { 'extensions': ['html'] }))
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+})
 
 const routes = require('./api/routes/cullRoute'); //importing route
 routes(app); //register the route
@@ -26,6 +33,7 @@ async function downloadPDF(pdfURL, outputFilename) {
 
 function downloadFile() {
     downloadPDF("http://active.boeing.com/doingbiz/d14426/bac_specrev.pdf", "./files/somePDF.pdf");
+    // Probably should use a try-catch here in case the page fails to load or the URL changes.
 }
 
 function PDFtoText() {

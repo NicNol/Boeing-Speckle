@@ -106,13 +106,13 @@ form label {
     text-align: center;
 }
 
-#spec_input {
-    width: 100%;
+#spec-input {
     border: solid 2px #eee;
     border-radius: 10px;
     font-size: 48px;
     text-align: center;
     color:navy;
+    width: 552px;
 }
 
 .button {
@@ -123,4 +123,40 @@ form label {
     color: #bbb;
     width: 100%;
     margin-top:-10px;
+}
+
+.search-results-area{
+    margin: 0;
+    padding: 0!important;
+    width: 100%
+}
+
+.number-results {
+    margin-bottom: 1em;
+    padding: 0!important;
+}
+
+.search-result {
+    border: 5px solid #bbb;
+    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+    box-shadow: 5px 5px 5px #ddd;
+}
+
+.search-spec {
+    color:navy;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: -8px;
+}
+
+.search-title {
+    font-style: italic;
+    font-weight: 100;
+    font-size: 24px;
+}
+
+.search-date {
+    color: #bbb;
 }
