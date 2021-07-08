@@ -29,15 +29,7 @@
           <input type="text" id="spec-input" autocomplete="off" />
           <input type="submit" value="Search" class="button" onclick="" />
         </form>
-        <div class="search-results-area">
-            <div class="number-results">Found XX similar:</div>
-            <div class="search-result">
-                <div class="search-spec">BAC5307 RevAA</div>
-                <div class ="search-title">PART MARKING</div>
-                <div class="search-date">22-APR-2020</div>
-            </div>
-            <div id="root"></div>
-        </div>
+        <div id="root" class="search-results-area"></div>
       </div>
     </div>
     <script src="../dist/bundle.js"></script>
@@ -47,16 +39,16 @@
       crossorigin="anonymous"
     ></script>
     <script>
-        $(document).ready(function () {
-            $(document).on("submit", "#spec-search-form", function () {
-                search_string = $("#spec-input").val();
-                uri = "/specs/" + search_string;
-                $.getJSON(uri, function( data ) {
-                    console.log(data) // returns an array of objects
-                })
-                return false;
-            });
+      $(document).ready(function () {
+        $(document).on("submit", "#spec-search-form", function () {
+          search_string = $("#spec-input").val();
+          uri = "/specs/" + search_string;
+          $.getJSON(uri, function (data) {
+            console.log(data); // returns an array of objects
+          });
+          return false;
         });
+      });
     </script>
   </body>
 </html>

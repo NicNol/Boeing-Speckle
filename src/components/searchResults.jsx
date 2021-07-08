@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SearchResult from "./searchResult";
 
 class SearchResults extends Component {
   render() {
@@ -6,9 +7,9 @@ class SearchResults extends Component {
 
     return (
       <div className="search-results-area">
-        <div class="number-results">Found XX similar:</div>
-        {results.map((result) => {
-          <SearchResult spec={result} />;
+        <div className="number-results">Found XX similar:</div>
+        {Object.entries(results).map(([key, value]) => {
+          return <SearchResult key={key} spec={value} />;
         })}
       </div>
     );
