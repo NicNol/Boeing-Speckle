@@ -24,16 +24,11 @@
           Last updated: <span id="last-update-date">MM/DD/YYYY</span>
         </div>
 
-        <form action="" method="GET" id="spec-search-form">
-          <label for="specification">Specification Search</label><br />
-          <input type="text" id="spec-input" autocomplete="off" />
-          <input type="submit" value="Search" class="button" onclick="" />
-        </form>
         <div id="root" class="search-results-area"></div>
       </div>
     </div>
     <script src="../dist/bundle.js"></script>
-    <script
+    <!-- <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
@@ -42,13 +37,13 @@
       $(document).ready(function () {
         $(document).on("submit", "#spec-search-form", function () {
           search_string = $("#spec-input").val();
-          uri = "/specs/" + search_string;
+          uri = "http://localhost:9000/specs/" + search_string;
           $.getJSON(uri, function (data) {
             console.log(data); // returns an array of objects
           });
           return false;
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>

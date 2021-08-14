@@ -4,8 +4,6 @@ class SearchResult extends Component {
   render() {
     const { specification, revision, title, date } = this.props.spec;
 
-    console.log("Hello");
-
     return (
       <div className="search-result">
         <div className="search-spec">

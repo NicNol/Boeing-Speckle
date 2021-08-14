@@ -2,6 +2,7 @@ import { hot } from "react-hot-loader/root";
 import React, { Component } from "react";
 import SearchResults from "./components/searchResults";
 import "./App.css";
+import SearchBar from "./components/searchBar";
 
 class App extends Component {
   state = {
@@ -45,8 +46,18 @@ class App extends Component {
     this.setState(newState);
   }
 
+  getResults = (e) => {
+    e.preventDefault();
+    console.log("Get Results!");
+  };
+
   render() {
-    return <SearchResults results={this.state.results} />;
+    return (
+      <React.Fragment>
+        <SearchBar functions={this.getResults} />
+        <SearchResults results={this.state.results} />
+      </React.Fragment>
+    );
   }
 }
 
