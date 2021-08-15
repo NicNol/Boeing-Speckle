@@ -7,7 +7,8 @@ class SearchResult extends Component {
     return (
       <div className="search-result">
         <div className="search-spec">
-          {specification} Rev{revision}
+          {specification}
+          {revision}
         </div>
         <div className="search-title">{title}</div>
         <div className="search-date">{date}</div>

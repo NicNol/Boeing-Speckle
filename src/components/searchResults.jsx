@@ -7,8 +7,8 @@ class SearchResults extends Component {
 
     return (
       <div className="search-results-area">
-        <div className="number-results">
-          Found {Object.keys(results).length} similar:
+        <div className={this.getResultsCountClasses(results)}>
+          Found {Object.keys(results).length} results:
         </div>
         {Object.entries(results).map(([key, value]) => {
           return <SearchResult key={key} spec={value} />;
@@ -17,12 +17,10 @@ class SearchResults extends Component {
     );
   }
 
-  getResultsStyle() {
-    let resultsStyle = "visibility: auto";
-    // Object.keys(this.results).length == 0
-    //   ? (resultsStyle = "visibility: hidden")
-    //   : (resultsStyle = "visibility: auto");
-    return resultsStyle;
+  getResultsCountClasses(results) {
+    let classString = "number-results ";
+    classString += Object.keys(results).length == 0 ? "hidden" : "visible";
+    return classString;
   }
 }
 
