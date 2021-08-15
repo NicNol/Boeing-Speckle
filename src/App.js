@@ -20,7 +20,7 @@ class App extends Component {
 
     const search_string = document.getElementById("spec-input").value;
 
-    if (search_string == "") return None;
+    if (search_string == "") return;
 
     const uri = "/specs/" + search_string;
 
