@@ -2,15 +2,22 @@ const pdf = require("pdf-parse");
 const fetch = require("node-fetch");
 
 async function getPdfBuffer(pdfURI) {
-  const response = await fetch(pdfURI);
-  const buffer = await response.buffer();
-  return buffer;
+  try {
+    const response = await fetch(pdfURI);
+    const buffer = await response.buffer();
+    return buffer;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function getPdfAsString(pdfBuffer) {
-  pdf(pdfBuffer).then(function (data) {
-    return data.text;
-  });
+async function getPdfAsString(pdfBuffer) {
+  try {
+    const pdfData = await pdf(pdfBuffer);
+    return pdfData.text;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function getBacDatafromString(inputString) {
@@ -30,7 +37,7 @@ function getBacDatafromString(inputString) {
       BacString += line;
     }
     if (reading && result_end) {
-      BacData.append(BacString.replace(/\s+/g, " ").trim());
+      BacData.push(BacString.replace(/\s+/g, " ").trim());
       BacString = "";
       reading = false;
     }
@@ -52,14 +59,19 @@ function getBacJsonFromList(inputList) {
 
 function getSpecAsJSON(spec) {
   const specArray = spec.split(" ");
+  const specArrayLength = specArray.length;
+
   const specName = specArray[0].match(/BAC[0-9-]+/)[0];
   const specRev = specArray[0].match(/[A-Z]+$/)[0];
   const specDate = specArray[specArrayLength - 2];
+
   let specTitle = "";
   for (let i = 1; i < specArrayLength - 2; i++) {
     specTitle += specArray[i] + " ";
   }
-  specTitle = specTitle.slice(0, -1).replaceAll('"', "'");
+  console.log(specTitle);
+  specTitle = specTitle.slice(0, -1);
+  specTitle = specTitle.replace(/'"'/g, "'");
 
   const output = {
     specification: specName,
@@ -71,7 +83,7 @@ function getSpecAsJSON(spec) {
   return output;
 }
 
-async function getSpecs() {
+async function getBacJson() {
   try {
     const specURI = "http://active.boeing.com/doingbiz/d14426/bac_specrev.pdf";
 
@@ -79,7 +91,7 @@ async function getSpecs() {
     const stream = await getPdfBuffer(specURI);
 
     console.log("Converting PDF to string...");
-    const dataString = getPdfAsString(stream);
+    const dataString = await getPdfAsString(stream);
 
     console.log("Removing unwanted data from string...");
     const BacSpecsList = getBacDatafromString(dataString);
@@ -91,4 +103,4 @@ async function getSpecs() {
   }
 }
 
-console.log(getSpecs());
+getBacJson().then((data) => console.log(data));
