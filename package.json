@@ -1,7 +1,7 @@
 {
-  "name": "bacull",
+  "name": "boeing-speckle",
   "version": "1.0.0",
-  "description": "Culls Boeing BAC and related specs from the Boeing D1-4426",
+  "description": "Culls Boeing BAC specifications from the Boeing D1-4426",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,13 +10,21 @@
     "build": "webpack --config webpack.prod.js",
     "getSpecs": "node getSpecs.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Boeing",
+    "BAC",
+    "Specification",
+    "MongoDB",
+    "Express",
+    "React",
+    "Node.js"
+  ],
+  "homepage": "https://github.com/NicNol/Boeing-Speckle",
+  "author": "Nic Nolan",
   "license": "ISC",
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.1",
     "express": "^4.17.1",
-    "file-type": "^16.5.3",
     "lodash.isequal": "^4.5.0",
     "mongoose": "^5.12.13",
     "node": "^16.1.0",
@@ -24,9 +32,7 @@
     "pdf-parse": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.9"
+    "react-hot-loader": "^4.13.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",
