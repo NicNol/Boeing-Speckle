@@ -1,5 +1,9 @@
 const pdf = require("pdf-parse");
 const fetch = require("node-fetch");
+const mongoose = require("mongoose");
+const isEqual = require("lodash.isequal");
+const model = require("./api/models/cullModel");
+//const Spec = mongoose.model("Spec", SpecSchema);
 
 async function getPdfBuffer(pdfURI) {
   try {
@@ -103,4 +107,50 @@ async function getBacJson() {
   }
 }
 
-getBacJson().then((data) => console.log(data));
+getBacJson().then((json) => {
+  const BacSpecs = Object.keys(json);
+  console.log("Found ", BacSpecs.length, "specs.");
+  let update_count = 0;
+  let new_count = 0;
+
+  for (let BacSpec of BacSpecs) {
+    const currentSpec = json[BacSpec];
+    const specName = currentSpec["specification"];
+
+    model.find({ specification: specName }, (err, data) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      let dbSpec = data.filter((specObject) => {
+        specObject[specification] === specName;
+      });
+
+      // If database doesn't have the spec, create it.
+      if (dbSpec.length == 0) {
+        model.create(currentSpec);
+        new_count++;
+        return;
+      }
+
+      // If database doesn't have the latest data, update it.
+      if (!isEqual(dbSpec, currentSpec)) {
+        model.findByIdAndUpdate(dbSpec._id, currentSpec, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          update_count++;
+        });
+      }
+    });
+  }
+
+  console.log(
+    "Created ",
+    new_count,
+    " specs and updated ",
+    update_count,
+    " specs."
+  );
+});
