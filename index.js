@@ -4,11 +4,12 @@ const serveStatic = require("serve-static");
 const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
-const config = require("./config");
 const Spec = require("./api/models/cullModel");
+const config = require("./config");
+const dbURI = process.env.dbURI || config.dbURI;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.dbURI, {
+mongoose.connect(dbURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
