@@ -4,8 +4,7 @@ const serveStatic = require("serve-static");
 const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
-const config = require("./config");
-const dbURI = process.env.dbURI || config.dbURI;
+const dbURI = process.env.dbURI;
 const Spec = require("./api/models/cullModel");
 
 mongoose.Promise = global.Promise;
