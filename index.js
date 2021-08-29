@@ -5,10 +5,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const config = require("./config");
+const dbURI = process.env.dbURI || config.dbURI;
 const Spec = require("./api/models/cullModel");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.dbURI, {
+mongoose.connect(dbURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
