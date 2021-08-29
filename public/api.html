@@ -57,11 +57,48 @@
         </div>
       </nav>
       <div class="content-section">
-        <div class="last-updated">
-          Last updated: <span id="last-update-date">MM/DD/YYYY</span>
-        </div>
+        <p>
+          Make API calls by using the following template:<br />
+          <code class="insert_url">/specs/%Specification%</code>
+        </p>
 
-        <div id="root" class="search-results-area"></div>
+        <p>
+          Replace <code>%Specification%</code> with the name of a Boeing BAC
+          specification or a search string. <br /><br />For example,<br />
+          <code class="insert_url">/specs/BAC5307</code>
+          <br />
+          will return the following matching JSON objects:<br />
+          <code class="code-block">
+            [ <br />
+            <span class="tab">
+              {
+              <br /><span class="tab">
+                "_id":"60c2b5af69370525fcfee73b",<br />
+                "specification":"BAC5307-1",<br />
+                "revision":"E",<br />
+                "title":"PART MARKING OF MACHINE READABLE INFORMATION WITH
+                LABELS",<br />
+                "date":"06-APR-2018"<br /></span
+              >},<br />
+              {<br /><span class="tab"
+                >"_id":"60c2b5af69370525fcfee73a",<br />
+                "specification":"BAC5307",<br />
+                "revision":"AA", <br />
+                "title":"PART MARKING", <br />
+                "date":"22-APR-2020"</span
+              >
+              }
+            </span>
+            ]
+          </code>
+        </p>
+        <p>
+          Note that search strings only match with the specification number
+          (BAC####) at this time. Calls such as
+          <code class="insert_url">/specs/5307</code> will not return any
+          results.
+        </p>
+        <br /><br />
       </div>
     </div>
     <div class="footer">
@@ -73,7 +110,11 @@
         developed by <a href="https://github.com/NicNol">Nic Nolan</a>.</small
       >
     </div>
-
-    <script src="dist/bundle.js"></script>
+    <script>
+      elements = document.getElementsByClassName("insert_url");
+      for (element of elements) {
+        element.innerText = location.origin + element.innerText;
+      }
+    </script>
   </body>
 </html>

@@ -8,7 +8,13 @@ class SearchBar extends Component {
       <form action="" method="GET" id="spec-search-form" onSubmit={getResults}>
         <label htmlFor="specification">Specification Search</label>
         <br />
-        <input type="text" id="spec-input" autoComplete="off" />
+        <input
+          type="text"
+          id="spec-input"
+          autoComplete="off"
+          spellcheck="false"
+          placeholder="BAC####"
+        />
         <input type="submit" value="Search" className="button" />
       </form>
     );
