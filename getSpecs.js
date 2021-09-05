@@ -3,7 +3,14 @@ const fetch = require("node-fetch");
 const mongoose = require("mongoose");
 const isEqual = require("lodash.isequal");
 const model = require("./api/models/cullModel");
+const config = require("./config");
 //const Spec = mongoose.model("Spec", SpecSchema);
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 async function getPdfBuffer(pdfURI) {
   try {
@@ -131,11 +138,10 @@ getBacJson().then((json) => {
       if (dbSpec.length == 0) {
         model.create(currentSpec);
         new_count++;
-        return;
       }
 
       // If database doesn't have the latest data, update it.
-      if (!isEqual(dbSpec, currentSpec)) {
+      else if (!isEqual(dbSpec, currentSpec)) {
         model.findByIdAndUpdate(dbSpec._id, currentSpec, (error, data) => {
           if (error) {
             console.log(error);
