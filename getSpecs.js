@@ -10,6 +10,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.dbURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 async function getPdfBuffer(pdfURI) {
@@ -74,13 +75,12 @@ function getSpecAsJSON(spec) {
 
   const specName = specArray[0].match(/BAC[0-9-]+/)[0];
   const specRev = specArray[0].match(/[A-Z]+$/)[0];
-  const specDate = specArray[specArrayLength - 2];
+  const specDate = specArray[specArrayLength - 1];
 
   let specTitle = "";
-  for (let i = 1; i < specArrayLength - 2; i++) {
+  for (let i = 1; i < specArrayLength - 1; i++) {
     specTitle += specArray[i] + " ";
   }
-  console.log(specTitle);
   specTitle = specTitle.slice(0, -1);
   specTitle = specTitle.replace(/'"'/g, "'");
 
@@ -92,6 +92,14 @@ function getSpecAsJSON(spec) {
   };
 
   return output;
+}
+
+async function getSpecs() {
+  const json = await getBacJson();
+
+  const updates = await pushJsonToDatabase(json);
+
+  return closeDatabaseConnection(updates);
 }
 
 async function getBacJson() {
@@ -114,49 +122,61 @@ async function getBacJson() {
   }
 }
 
-getBacJson().then((json) => {
+async function pushJsonToDatabase(json) {
   const BacSpecs = Object.keys(json);
   console.log("Found ", BacSpecs.length, "specs.");
-  let update_count = 0;
-  let new_count = 0;
+
+  let updates = { error: 0, new: 0, update: 0, "no action": 0 };
 
   for (let BacSpec of BacSpecs) {
     const currentSpec = json[BacSpec];
-    const specName = currentSpec["specification"];
+    let output = await processSpec(currentSpec);
+    updates[output]++;
+  }
 
-    model.find({ specification: specName }, (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
+  return updates;
+}
 
-      let dbSpec = data.filter((specObject) => {
-        specObject[specification] === specName;
-      });
+async function processSpec(spec) {
+  const specName = spec["specification"];
 
-      // If database doesn't have the spec, create it.
-      if (dbSpec.length == 0) {
-        model.create(currentSpec);
-        new_count++;
-      }
+  model.find({ specification: specName }, (err, data) => {
+    if (err) {
+      console.log(err);
+      return "error";
+    }
 
-      // If database doesn't have the latest data, update it.
-      else if (!isEqual(dbSpec, currentSpec)) {
-        model.findByIdAndUpdate(dbSpec._id, currentSpec, (error, data) => {
+    let dbSpec = data.filter(
+      (specObject) => specObject["specification"] === specName
+    );
+
+    // If database doesn't have the spec, create it.
+    if (dbSpec.length == 0) {
+      model.create(currentSpec);
+      return "new";
+    }
+
+    // If database doesn't have the latest data, update it.
+    else if (dbSpec["revision"] != spec["revision"]) {
+      model.findByIdAndUpdate(
+        dbSpec._id,
+        { ...dbSpec, revision: spec["revision"] },
+        (error, data) => {
           if (error) {
             console.log(error);
           }
-          update_count++;
-        });
-      }
-    });
-  }
+          return "update";
+        }
+      );
+    }
 
-  console.log(
-    "Created ",
-    new_count,
-    " specs and updated ",
-    update_count,
-    " specs."
-  );
-});
+    return "no action";
+  });
+}
+
+function closeDatabaseConnection(updates) {
+  console.log(updates);
+  //mongoose.connection.close();
+}
+
+getSpecs();
