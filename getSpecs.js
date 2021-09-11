@@ -124,7 +124,7 @@ async function getBacJson() {
 
 async function pushJsonToDatabase(json) {
   const BacSpecs = Object.keys(json);
-  console.log("Found ", BacSpecs.length, "specs.");
+  console.log(`Found ${BacSpecs.length} specs...`);
 
   let updates = { error: 0, new: 0, update: 0, "no action": 0 };
 
@@ -139,11 +139,12 @@ async function pushJsonToDatabase(json) {
 
 async function processSpec(spec) {
   const specName = spec["specification"];
+  let response = "no action";
 
-  model.find({ specification: specName }, (err, data) => {
+  const query = await model.find({ specification: specName }, (err, data) => {
     if (err) {
       console.log(err);
-      return "error";
+      response = "error";
     }
 
     let dbSpec = data.filter(
@@ -153,7 +154,7 @@ async function processSpec(spec) {
     // If database doesn't have the spec, create it.
     if (dbSpec.length == 0) {
       model.create(currentSpec);
-      return "new";
+      response = "new";
     }
 
     // If database doesn't have the latest data, update it.
@@ -165,17 +166,29 @@ async function processSpec(spec) {
           if (error) {
             console.log(error);
           }
-          return "update";
+          response = "update";
         }
       );
     }
-
-    return "no action";
   });
+
+  return response;
 }
 
 function closeDatabaseConnection(updates) {
-  console.log(updates);
+  let errors_count = updates["error"];
+  let new_specs_count = updates["new"];
+  let updated_specs_count = updates["update"];
+  let unchanged_specs_count = updates["no action"];
+
+  new_specs_count &&
+    console.log(`Created ${new_specs_count} new specifications...`);
+  updated_specs_count &&
+    console.log(`Updated ${updated_specs_count} specifications...`);
+  unchanged_specs_count &&
+    console.log(`Found ${unchanged_specs_count} specifications current...`);
+  errors_count && console.log(`Found ${errors_count} errors...`);
+
   //mongoose.connection.close();
 }
 
