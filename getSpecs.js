@@ -1,9 +1,16 @@
 const pdf = require("pdf-parse");
 const fetch = require("node-fetch");
 const mongoose = require("mongoose");
-const isEqual = require("lodash.isequal");
 const model = require("./api/models/cullModel");
-//const Spec = mongoose.model("Spec", SpecSchema);
+const config = require("./config");
+const dbURI = process.env.dbURI || config.dbURI;
+
+mongoose.Promise = global.Promise;
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 async function getPdfBuffer(pdfURI) {
   try {
@@ -67,13 +74,12 @@ function getSpecAsJSON(spec) {
 
   const specName = specArray[0].match(/BAC[0-9-]+/)[0];
   const specRev = specArray[0].match(/[A-Z]+$/)[0];
-  const specDate = specArray[specArrayLength - 2];
+  const specDate = specArray[specArrayLength - 1];
 
   let specTitle = "";
-  for (let i = 1; i < specArrayLength - 2; i++) {
+  for (let i = 1; i < specArrayLength - 1; i++) {
     specTitle += specArray[i] + " ";
   }
-  console.log(specTitle);
   specTitle = specTitle.slice(0, -1);
   specTitle = specTitle.replace(/'"'/g, "'");
 
@@ -85,6 +91,17 @@ function getSpecAsJSON(spec) {
   };
 
   return output;
+}
+
+async function getSpecs(attempts = 3) {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const json = await getBacJson();
+      const updates = await pushJsonToDatabase(json);
+      const closeDB = await closeDatabaseConnection(updates);
+      return closeDB;
+    } catch {}
+  }
 }
 
 async function getBacJson() {
@@ -107,50 +124,81 @@ async function getBacJson() {
   }
 }
 
-getBacJson().then((json) => {
-  const BacSpecs = Object.keys(json);
-  console.log("Found ", BacSpecs.length, "specs.");
-  let update_count = 0;
-  let new_count = 0;
+async function pushJsonToDatabase(json) {
+  try {
+    const BacSpecs = Object.keys(json);
+    console.log(`Found ${BacSpecs.length} specs...`);
 
-  for (let BacSpec of BacSpecs) {
-    const currentSpec = json[BacSpec];
-    const specName = currentSpec["specification"];
+    let updates = { error: 0, new: 0, update: 0, "no action": 0 };
 
-    model.find({ specification: specName }, (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
+    for (const BacSpec of BacSpecs) {
+      const currentSpec = json[BacSpec];
+      let output = await processSpec(currentSpec);
+      updates[output]++;
+    }
 
-      let dbSpec = data.filter((specObject) => {
-        specObject[specification] === specName;
-      });
+    return updates;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-      // If database doesn't have the spec, create it.
-      if (dbSpec.length == 0) {
-        model.create(currentSpec);
-        new_count++;
-        return;
-      }
+async function processSpec(spec) {
+  const specName = spec["specification"];
+  let response = "no action";
 
-      // If database doesn't have the latest data, update it.
-      if (!isEqual(dbSpec, currentSpec)) {
-        model.findByIdAndUpdate(dbSpec._id, currentSpec, (error, data) => {
+  const query = await model.find({ specification: specName }, (err, data) => {
+    if (err) {
+      console.log(err);
+      response = "error";
+    }
+
+    let dbSpec = data.filter(
+      (specObject) => specObject["specification"] === specName
+    );
+
+    // If database doesn't have the spec, create it.
+    if (dbSpec.length == 0) {
+      response = "new";
+      model.create(spec);
+    }
+
+    // If database doesn't have the latest data, update it.
+    else if (dbSpec["revision"] != spec["revision"]) {
+      response = "update";
+      model.findByIdAndUpdate(
+        dbSpec._id,
+        { ...dbSpec, revision: spec["revision"] },
+        (error, data) => {
           if (error) {
             console.log(error);
           }
-          update_count++;
-        });
-      }
-    });
-  }
+        }
+      );
+    }
+  });
 
-  console.log(
-    "Created ",
-    new_count,
-    " specs and updated ",
-    update_count,
-    " specs."
+  return response;
+}
+
+async function closeDatabaseConnection(updates) {
+  let errors_count = updates["error"];
+  let new_specs_count = updates["new"];
+  let updated_specs_count = updates["update"];
+  new_specs_count &&
+    console.log(
+      `Added ${new_specs_count} new specifications to the database...`
+    );
+  updated_specs_count &&
+    console.log(
+      `Updated ${updated_specs_count} specifications in the database...`
+    );
+  errors_count && console.log(`Found ${errors_count} errors...`);
+
+  await Promise.all(
+    mongoose.modelNames().map((model) => mongoose.model(model).ensureIndexes())
   );
-});
+  await mongoose.disconnect();
+}
+
+module.exports = getSpecs;
