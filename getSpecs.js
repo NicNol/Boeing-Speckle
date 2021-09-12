@@ -201,4 +201,4 @@ async function closeDatabaseConnection(updates) {
   await mongoose.disconnect();
 }
 
-getSpecs();
+module.exports = getSpecs;

@@ -51,9 +51,7 @@ This will allow BAC specification data to be scraped and saved to the database, 
 
 ## Run
 
-From the root of the project directory, first call `node run getSpecs`. This will scrape the Boeing D1-4426 for specifications and populate the database.
-
-Next, call `node run dev-start-back`. This will start the backend server in development mode ([Express](https://expressjs.com/) with [nodemon](https://www.npmjs.com/package/nodemon)).
+Next, call `node run dev-start-back`. This will start the backend server in development mode ([Express](https://expressjs.com/) with [nodemon](https://www.npmjs.com/package/nodemon)). This will also scrape the Boeing D1-4426 for specifications and populate or update the database as necessary.
 
 Then, open a new terminal window and navigate to the root of the project directory. Call `node run dev-start-front`. This will start the frontend server in development mode ([webpack](https://webpack.js.org/), [Babel](https://babeljs.io/), and [React](https://reactjs.org/)).
 
