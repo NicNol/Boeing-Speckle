@@ -1,21 +1,23 @@
-'use strict';
-const mongoose = require('mongoose');
+"use strict";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
-let SpecSchema = new Schema({
+let SpecSchema = new Schema(
+  {
     specification: {
-    type: String,
+      type: String,
+    },
+    revision: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
   },
-  revision: {
-    type: String,
-  },
-  title: {
-    type: String,
-  },
-  date: {
-    type: String,
-  }
-}, {collection: 'bac'});
+  { collection: "bac", versionKey: false }
+);
 
-module.exports = mongoose.model('Spec', SpecSchema);
+module.exports = mongoose.model("Spec", SpecSchema);

@@ -28,6 +28,7 @@
     "lodash.isequal": "^4.5.0",
     "mongoose": "^5.12.13",
     "node": "^16.1.0",
+    "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
     "pdf-parse": "^1.1.1",
     "react": "^17.0.2",
