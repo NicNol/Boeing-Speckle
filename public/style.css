@@ -116,8 +116,8 @@ a:hover {
     padding: 0 20px;
 }
 
-.navbar-header,
 .nav-links {
+    border-top: #eee solid 1px;
     border-bottom: #eee solid 1px;
 }
 
