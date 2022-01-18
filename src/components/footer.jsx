@@ -1,15 +1,17 @@
 import React from "react";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 
 export default function Footer() {
     return (
-        <div class="footer">
-            <small>
-                Boeing Speckle is an
-                <a href="https://github.com/NicNol/Boeing-Speckle">
-                    open source project
-                </a>
-                developed by <a href="https://github.com/NicNol">Nic Nolan</a>.
-            </small>
-        </div>
+        <Box className="footer" w={"100%"} px={8} py={16}>
+            <Text>
+                Boeing Speckle is an{" "}
+                <Link href="https://github.com/NicNol/Boeing-Speckle">
+                    open source project{" "}
+                </Link>
+                developed by{" "}
+                <Link href="https://github.com/NicNol">Nic Nolan</Link>.
+            </Text>
+        </Box>
     );
 }
