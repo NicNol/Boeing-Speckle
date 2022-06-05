@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Flex, Input } from "@chakra-ui/react";
+import { Button, Flex, Input, Heading } from "@chakra-ui/react";
 
 class SearchBar extends Component {
     render() {
@@ -13,7 +13,11 @@ class SearchBar extends Component {
                 onSubmit={getResults}
             >
                 <Flex direction={"column"}>
-                    <label htmlFor="specification">Specification Search</label>
+                    <label htmlFor="specification">
+                        <Heading size={"md"} color={"#444"}>
+                            Specification Search
+                        </Heading>
+                    </label>
                     <br />
                     <Input
                         type="text"

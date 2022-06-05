@@ -137,8 +137,8 @@ code {
 
 .footer {
     font-size: 1rem;
-    background-color: #333;
-    color: #ddd;
+    background-color: #eee;
+    color: #444;
     padding: 10px 0;
     margin: 0 auto;
     overflow: none;
@@ -147,5 +147,5 @@ code {
 }
 
 .footer a:hover {
-    color: white !important;
+    color: navy !important;
 }
