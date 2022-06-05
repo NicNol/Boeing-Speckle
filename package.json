@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Culls Boeing BAC specifications from the Boeing D1-4426",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "node index.js",
     "dev-start-back": "nodemon index.js",
