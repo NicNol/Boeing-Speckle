@@ -1,20 +1,21 @@
 import React, { Component } from "react";
+import { Box, Flex } from "@chakra-ui/react";
 
 class SearchResult extends Component {
-  render() {
-    const { specification, revision, title, date } = this.props.spec;
+    render() {
+        const { specification, revision, title, date } = this.props.spec;
 
-    return (
-      <div className="search-result">
-        <div className="search-spec">
-          {specification}
-          {revision}
-        </div>
-        <div className="search-title">{title}</div>
-        <div className="search-date">{date}</div>
-      </div>
-    );
-  }
+        return (
+            <Flex className="search-result" flexDirection={"column"} px={4}>
+                <Box className="search-spec">
+                    {specification}
+                    {revision}
+                </Box>
+                <Box className="search-title">{title}</Box>
+                <Box className="search-date">{date}</Box>
+            </Flex>
+        );
+    }
 }
 
 export default SearchResult;

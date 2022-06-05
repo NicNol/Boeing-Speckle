@@ -1,95 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700&display=swap');
-html, body {
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700&display=swap");
+html,
+body {
     background-color: #eee;
     color: #666;
-    height: 100%;
-    margin: 0;
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: "Noto Sans SC", sans-serif;
 }
 
-html {
-    font-size: 100%; 
-}
-
-  @media screen and (min-width: 600px) {
-    html {
-        font-size: 125%; 
-    }
-    
-    .body-content, .footer {
-        max-width: 600px;
-    }
-    .body-content:before, .footer:before {
-        box-shadow: -20px 0 20px -20px #ddd inset;
-        content: " ";
-        height: 100%;
-        left: -20px;
-        position: absolute;
-        top: 0;
-        width: 20px;
-    }
-    
-    .body-content:after, .footer:after {
-        box-shadow: 20px 0 20px -20px #ddd inset;
-        content: " ";
-        height: 100%;
-        position: absolute;
-        top: 0;
-        right: -20px;
-        width: 20px;
-    }
-    h1 {
-        margin: 0 0 .1em 0;
-        font-size: 3rem;
-    }
-    h2 {
-        display: inline;
-        margin: 0;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    html {
-        font-size: 112.5%; 
-    }
-    
-    .body-content {
-      width: 100%;
-    }
-
-    h1 {
-        margin: 0 0 .1em 0;
-        font-size: 3rem;
-    }
-    h2 {
-        display: inline;
-        margin: 0;
-    }
-  }
-
-  @media screen and (max-width: 360px) {
-    html {
-        font-size: 100%; 
-    }
-    .body-content {
-        width: 100%;
-      }
-      h1 {
-        margin: 0 0 .1em 0;
-        font-size: 2rem;
-    }
-    h2 {
-        display: block;
-        margin: 0;
-    }
-}
-
-a, a:visited {
+a,
+a:visited {
     color: #666;
     font-weight: 700;
-    text-decoration: underline;
     text-decoration-color: #666;
-    transition: .5s color, .5s text-decoration-color;
+    transition: 0.5s color, 0.5s text-decoration-color;
 }
 
 a:hover {
@@ -97,42 +19,17 @@ a:hover {
     text-decoration-color: transparent;
 }
 
-.body-content {
-    min-height: 101%;
-    background-color: white;
-    margin: 0 auto -10px auto;
-    overflow: none;
-    position: relative;
-}
-
-.body-content div {
-    padding: 0 20px;
-}
-
-.navbar-header, .nav-links {
+.nav-links {
+    border-top: #eee solid 1px;
     border-bottom: #eee solid 1px;
 }
 
-.navbar-brand {
-    font-weight: 100;
-    color: transparent;
-    background: #bbb;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-    text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
-}
-
-.nav-links {
-    text-align: center;
-    background-color: #fefefe;
-}
-
-.nav-links a, .nav-links a:visited {
+.nav-links a,
+.nav-links a:visited {
     text-decoration: none;
     color: #bbb;
     font-weight: 400;
-    padding: 0 20px;;
+    padding: 0 20px;
     transition: color 1s;
 }
 
@@ -147,30 +44,21 @@ a:hover {
     visibility: hidden;
 }
 
-form {
-    margin: 0;
-    padding: 0;
-}
-form label {
-    font-size: 1.5rem;
-    text-align: center;
-}
-
 #spec-input {
     box-sizing: border-box;
     font-size: 2rem;
     font-weight: 700;
-    font-family: 'Noto Sans SC';
+    font-family: "Noto Sans SC";
     text-align: center;
     color: navy;
-    text-shadow: 1px 1px 2px rgba(102,102,102,0.5);
+    text-shadow: 1px 1px 2px rgba(102, 102, 102, 0.5);
     width: 100%;
     border: 2px navy solid;
     border-radius: 10px;
     box-shadow: 0 0 0 2px #eee;
     outline: none;
-    transition: .1s;
-    margin: .25em 0;
+    transition: 0.1s;
+    margin: 0.25em 0;
 }
 
 #spec-input:focus {
@@ -184,19 +72,12 @@ form label {
     border: none;
     color: #bbb;
     width: 100%;
-    margin-top:-10px;
-}
-
-.search-results-area{
-    margin: 0;
-    padding-left: 0!important;
-    padding-bottom: 20px!important;
-    width: 100%
+    margin-top: -10px;
 }
 
 .number-results {
     margin-bottom: 1em;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .search-result {
@@ -208,7 +89,7 @@ form label {
 }
 
 .search-spec {
-    color:navy;
+    color: navy;
     font-size: 36px;
     font-weight: 700;
     margin-bottom: -8px;
@@ -224,7 +105,7 @@ form label {
 .search-date {
     color: #bbb;
     font-size: 14px;
-    margin-bottom: .25em
+    margin-bottom: 0.25em;
 }
 
 .hidden {
@@ -244,20 +125,20 @@ code {
 }
 
 .code-block {
-    display:block;
+    display: block;
     box-sizing: border-box;
     width: 100%;
 }
 
 .tab {
     margin-left: 20px;
-    display:block;
+    display: block;
 }
 
 .footer {
     font-size: 1rem;
-    background-color: #333;
-    color: #ddd;
+    background-color: #eee;
+    color: #444;
     padding: 10px 0;
     margin: 0 auto;
     overflow: none;
@@ -266,5 +147,5 @@ code {
 }
 
 .footer a:hover {
-    color: white!important;
+    color: navy !important;
 }
