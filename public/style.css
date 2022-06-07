@@ -116,8 +116,12 @@ a:hover {
     visibility: visible;
 }
 
+.no-wrap {
+    white-space: nowrap;
+}
+
 code {
-    background-color: #ddd;
+    background-color: #eee;
     border: 1px #333 solid;
     font-family: monospace;
     padding: 4px;

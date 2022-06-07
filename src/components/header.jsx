@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Flex, Heading, Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function Header() {
     return (
@@ -19,13 +20,25 @@ export default function Header() {
                 </Heading>
             </Box>
             <Box className="nav-links" fontSize={24} textAlign={"center"}>
-                <Link href="./index" _hover={{ textDecoration: "none" }}>
+                <Link
+                    as={RouterLink}
+                    to="/"
+                    _hover={{ textDecoration: "none" }}
+                >
                     Home
                 </Link>
-                <Link href="./api" _hover={{ textDecoration: "none" }}>
+                <Link
+                    as={RouterLink}
+                    to="/api"
+                    _hover={{ textDecoration: "none" }}
+                >
                     API
                 </Link>
-                <Link href="./about" _hover={{ textDecoration: "none" }}>
+                <Link
+                    as={RouterLink}
+                    to="/about"
+                    _hover={{ textDecoration: "none" }}
+                >
                     About
                 </Link>
             </Box>
