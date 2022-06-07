@@ -40,6 +40,11 @@ export default function Home() {
         if (searchIndex >= 0) {
             newSearches.splice(searchIndex, 1);
         }
+        if (searchIndex === 0) {
+            const nextRecentSpec =
+                newSearches.length > 0 ? newSearches[0] : null;
+            setResults(nextRecentSpec ? resultsCache[nextRecentSpec] : {});
+        }
         setSearches(newSearches);
     }
 
