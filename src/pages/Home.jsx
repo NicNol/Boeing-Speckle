@@ -127,7 +127,10 @@ export default function Home() {
                                 </Text>
                             </Flex>
                             <SearchBar functions={getResults} />
-                            <SearchResults results={results} />
+                            <SearchResults
+                                results={results}
+                                lastSearch={searches[0]}
+                            />
                         </Flex>
                     </Box>
                 </Flex>
