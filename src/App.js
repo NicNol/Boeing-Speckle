@@ -1,42 +1,19 @@
-import { hot } from "react-hot-loader/root";
-import React, { Component } from "react";
-import SearchResults from "./components/searchResults";
-import "./App.css";
-import SearchBar from "./components/searchBar";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Api from "./pages/Api";
 
-class App extends Component {
-  state = {
-    results: {},
-  };
-
-  updateResults(newResults) {
-    let newState = { ...this.state };
-    newState["results"] = newResults;
-    this.setState(newState);
-  }
-
-  getResults = (e) => {
-    e.preventDefault();
-
-    const search_string = document.getElementById("spec-input").value;
-
-    if (search_string == "") return;
-
-    const uri = "/specs/" + search_string;
-
-    fetch(uri)
-      .then((response) => response.json())
-      .then((results) => this.updateResults(results));
-  };
-
-  render() {
+function App() {
     return (
-      <React.Fragment>
-        <SearchBar functions={this.getResults} />
-        <SearchResults results={this.state.results} />
-      </React.Fragment>
+        <BrowserRouter>
+            <Routes>
+                <Route path="about" element={<About />} />
+                <Route path="api" element={<Api />} />
+                <Route index element={<Home />} />
+            </Routes>
+        </BrowserRouter>
     );
-  }
 }
 
-export default hot(App);
+export default App;

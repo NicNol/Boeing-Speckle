@@ -12,25 +12,25 @@ const getSpecs = require("./getSpecs");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(serveStatic(path.join(__dirname, "/public"), { extensions: ["html"] }));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
-});
-
 const routes = require("./api/routes/cullRoute"); //importing route
 routes(app); //register the route
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/public/index.html"));
+});
 
 // Get Specs on server start up, and then everyday at 12pm.
 getSpecs();
 cron.schedule("0 12 * * *", () => {
-  getSpecs();
+    getSpecs();
 });
 
 app.listen(port);
