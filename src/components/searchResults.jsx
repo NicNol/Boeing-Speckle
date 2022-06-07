@@ -4,7 +4,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 
 class SearchResults extends Component {
     render() {
-        const { results } = this.props;
+        const { results, lastSearch } = this.props;
 
         return (
             <Box className="search-results-area">
@@ -14,7 +14,8 @@ class SearchResults extends Component {
                     color={"#444"}
                 >
                     Found {Object.keys(results).length}{" "}
-                    {Object.keys(results).length === 1 ? "result" : "results"}:
+                    {Object.keys(results).length === 1 ? "result" : "results"}{" "}
+                    for "{lastSearch}":
                 </Heading>
                 {Object.entries(results).map(([key, value]) => {
                     return <SearchResult key={key} spec={value} />;
