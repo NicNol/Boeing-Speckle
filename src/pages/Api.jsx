@@ -27,13 +27,13 @@ export default function Api() {
                                 <Text>
                                     All API calls are made relative to the base
                                     url:{" "}
-                                    <code class="no-wrap">{`${window.location.protocol}//${window.location.hostname}`}</code>
+                                    <code className="no-wrap">{`${window.location.protocol}//${window.location.hostname}`}</code>
                                     .
                                 </Text>
                                 <Text>
                                     Users can make API calls by sending HTTP GET
                                     requests using the following URL template:{" "}
-                                    <code class="no-wrap">
+                                    <code className="no-wrap">
                                         /specs/%Specification%
                                     </code>
                                 </Text>
@@ -44,19 +44,19 @@ export default function Api() {
                                     search string. <br />
                                     <br />
                                     For example,{" "}
-                                    <code class="no-wrap">
+                                    <code className="no-wrap">
                                         /specs/BAC5307
                                     </code>{" "}
                                     will return the following matching JSON
                                     objects:
                                     <br />
                                     <br />
-                                    <code class="code-block">
+                                    <code className="code-block">
                                         [ <br />
-                                        <span class="tab">
+                                        <span className="tab">
                                             &#123;
                                             <br />
-                                            <span class="tab">
+                                            <span className="tab">
                                                 "_id":"60c2b5af69370525fcfee73b",
                                                 <br />
                                                 "specification":"BAC5307-1",
@@ -74,7 +74,7 @@ export default function Api() {
                                             <br />
                                             &#123;
                                             <br />
-                                            <span class="tab">
+                                            <span className="tab">
                                                 "_id":"60c2b5af69370525fcfee73a",
                                                 <br />
                                                 "specification":"BAC5307",
@@ -91,7 +91,9 @@ export default function Api() {
                                 <Text>
                                     Note that search strings may be partial
                                     matches. Calls such as{" "}
-                                    <code class="insert_url">/specs/5307</code>{" "}
+                                    <code className="insert_url">
+                                        /specs/5307
+                                    </code>{" "}
                                     will return the same results.
                                 </Text>
                             </Flex>

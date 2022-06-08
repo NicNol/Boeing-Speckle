@@ -4,11 +4,17 @@ const serveStatic = require("serve-static");
 const app = express();
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
-const Spec = require("./api/models/cullModel");
+const Spec = require("./api/models/cullModel").default;
 const config = require("./config");
 const dbURI = process.env.dbURI || config.dbURI;
 const cron = require("node-cron");
 const getSpecs = require("./getSpecs");
+
+// Get Specs on server start up, and then everyday at 12pm.
+getSpecs();
+cron.schedule("0 12 * * *", () => {
+    getSpecs();
+});
 
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURI, {
@@ -25,12 +31,6 @@ routes(app); //register the route
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/public/index.html"));
-});
-
-// Get Specs on server start up, and then everyday at 12pm.
-getSpecs();
-cron.schedule("0 12 * * *", () => {
-    getSpecs();
 });
 
 app.listen(port);

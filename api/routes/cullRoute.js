@@ -1,10 +1,9 @@
-'use strict';
-module.exports = function(app) {
-  const cullController = require('../controllers/cullController');
+"use strict";
 
-  app.route('/specs')
-    .get(cullController.list_all_specs)
+module.exports = function (app) {
+    const cullController = require("../controllers/cullController");
 
-  app.route('/specs/:specification')
-    .get(cullController.read_a_spec)
+    app.route("/specs").get(cullController.list_all_specs);
+
+    app.route("/specs/:specification").get(cullController.read_a_spec);
 };
