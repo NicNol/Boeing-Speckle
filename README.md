@@ -1,6 +1,6 @@
 # [Boeing Speckle](https://boeing-speckle.herokuapp.com/) ✈️
 
-![Preview of Boeing Speckle Search](/public/images/preview.jpg?raw=true)
+![Preview of Boeing Speckle Search](/public/images/preview.png?raw=true)
 Boeing Speckle, short for Boeing Specification Cull, is an API that scrapes data from BAC specifications publicly available on the [Boeing D1-4426](http://active.boeing.com/doingbiz/d14426/index.cfm) for companies in the Boeing supply chain. Boeing Speckle allows users to query Boeing specifications by their BAC (document) number, and return related information including the document title, revision level, and revision date. The API is available as a GUI (graphical user interface) for quick access, or by making API calls to return a [JSON](https://en.wikipedia.org/wiki/JSON) response.
 
 # API Calls ☎️
